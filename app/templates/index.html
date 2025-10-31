@@ -15,10 +15,12 @@
   <body>
     <div class="card">
       <div class="server-icon">
-        <img
-          src="{{ url_for('static', filename='animals/' + animal + '.svg') }}"
-          alt="{{ animal }}"
-        />
+        <div class="icon-wrapper">
+          <img
+            src="{{ url_for('static', filename='animals/' + animal + '.svg') }}"
+            alt="{{ animal }}"
+          />
+        </div>
       </div>
       <div class="server-name">{{ hostname }}</div>
 

@@ -18,10 +18,8 @@ def show_hostname():
     uptime = time.time() - start_time
     cpu_percent = psutil.cpu_percent(interval=0.1)
     memory = psutil.virtual_memory()
-    
-    # Select animal based on hostname hash
-    animals = ['cat', 'dog', 'bear', 'bunny', 'fox', 'panda', 'koala', 'pig', 'owl', 'penguin']
-    animal = animals[hash(hostname) % len(animals)]
+
+    animal = 'cat' # for cuteness
     
     return render_template(
         'index.html',
