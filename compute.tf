@@ -19,7 +19,7 @@ resource "aws_launch_template" "web_template" {
   instance_type = "t2.micro"
 
   tags = {
-    "version" = "1.0.2" # Trigger updates when changed
+    "version" = "1.0.5" # Trigger updates when changed
   }
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
@@ -32,6 +32,8 @@ resource "aws_launch_template" "web_template" {
               usermod -a -G docker ec2-user
 
               # Clone the repository with the app code
+              # force clean
+              rm -rf /home/ec2-user/app 
               git clone https://github.com/YellowO2/loadbalancer-webapp.git /home/ec2-user/app
 
               # Build and run the Docker container
@@ -52,6 +54,15 @@ resource "aws_autoscaling_group" "web_asg" {
   launch_template {
     id      = aws_launch_template.web_template.id
     version = "$Latest"
+  }
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 100
+      instance_warmup        = 60
+    }
+    triggers = ["launch_template"]
   }
 }
 
