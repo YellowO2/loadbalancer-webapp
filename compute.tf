@@ -4,7 +4,12 @@ data "aws_ami" "amazon_linux" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x88_64-gp2"]
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
 }
 
@@ -12,6 +17,10 @@ resource "aws_launch_template" "web_template" {
   name_prefix   = "web-server-template-"
   image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
+
+  tags = {
+    "version" = "1.0.2" # Trigger updates when changed
+  }
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
 

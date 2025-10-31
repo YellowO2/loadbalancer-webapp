@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ hostname }}</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <script>
+      // Auto-refresh every 3 seconds to see load balancing
+      setTimeout(() => location.reload(), 3000);
+    </script>
+  </head>
+  <body>
+    <div class="card">
+      <div class="server-icon">
+        <img
+          src="{{ url_for('static', filename='animals/' + animal + '.svg') }}"
+          alt="{{ animal }}"
+        />
+      </div>
+      <div class="server-name">{{ hostname }}</div>
+
+      <div class="metrics">
+        <div class="metric">
+          <svg
+            class="metric-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <div class="metric-value">{{ requests }}</div>
+          <div class="metric-label">Requests</div>
+        </div>
+        <div class="metric">
+          <svg
+            class="metric-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div class="metric-value">{{ uptime }}s</div>
+          <div class="metric-label">Uptime</div>
+        </div>
+        <div class="metric">
+          <svg
+            class="metric-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <div class="metric-value">{{ cpu }}%</div>
+          <div class="metric-label">CPU</div>
+        </div>
+        <div class="metric">
+          <svg
+            class="metric-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <div class="metric-value">{{ memory }}%</div>
+          <div class="metric-label">Memory</div>
+        </div>
+      </div>
+
+      <div class="status">Healthy & Running</div>
+    </div>
+  </body>
+</html>
